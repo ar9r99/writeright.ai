@@ -1,9 +1,8 @@
-streamlit
-opencv-python
+streamlit==1.35.0
+opencv-python-headless==4.9.0.80
 pillow
 pytesseract
 numpy
-streamlit-webrtc
 deep-translator
-gtts
-av
+streamlit-webrtc
+gTTS

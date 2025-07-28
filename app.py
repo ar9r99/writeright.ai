@@ -200,7 +200,22 @@ if st.session_state.cleaned_text:
             st.error(f"Text-to-speech failed: {e}")
 
     st.download_button("📅 Download as .txt", data=st.session_state.cleaned_text, file_name="note.txt")
-    st.button("📋 Copy to Clipboard")
+
+    # Functional Copy to Clipboard Button
+    st.markdown(
+        f"""
+        <button id="copy-btn" style="background-color:#444;color:white;font-weight:600;border-radius:8px;padding:0.5em 1em;margin-top:0.5em;">📋 Copy to Clipboard</button>
+        <script>
+        const copyBtn = document.getElementById('copy-btn');
+        copyBtn.onclick = function() {{
+            navigator.clipboard.writeText(`{st.session_state.cleaned_text.replace("`", "\\`")}`);
+        }};
+        </script>
+        """,
+        unsafe_allow_html=True
+    )
+
+# ...existing code...
 
     if st.button("🔄 Upload Another Image"):
         st.session_state.cleaned_text = ""

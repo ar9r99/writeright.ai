@@ -203,15 +203,10 @@ if st.session_state.cleaned_text:
 
      # Functional Copy to Clipboard Button
     
-    st.markdown(cleaned_text_js = st.session_state.cleaned_text
+    cleaned_text_js = st.session_state.cleaned_text.replace("`", "\\`").replace("\\", "\\\\").replace("\n", "\\n")
+    st.markdown(
         f"""
-        <button id="copy-btn" style="background-color:#444;color:white;font-weight:600;border-radius:8px;padding:0.5em 1em;margin-top:0.5em;">📋 Copy to Clipboard</button>
-        <script>
-        const copyBtn = document.getElementById('copy-btn');
-        copyBtn.onclick = function() {{
-            navigator.clipboard.writeText(`{cleaned_text_js}`);
-        }};
-        </script>
+        <button onclick="navigator.clipboard.writeText(`{cleaned_text_js}`)" style="background-color:#444;color:white;font-weight:600;border-radius:8px;padding:0.5em 1em;margin-top:0.5em;">📋 Copy to Clipboard</button>
         """,
         unsafe_allow_html=True
     )

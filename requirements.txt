@@ -1,0 +1,8 @@
+streamlit
+opencv-python
+pillow
+numpy
+pytesseract
+streamlit-webrtc
+deep-translator
+gtts

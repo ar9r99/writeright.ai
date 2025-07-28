@@ -206,7 +206,8 @@ if st.session_state.cleaned_text:
     cleaned_text_js = st.session_state.cleaned_text.replace("`", "\\`").replace("\\", "\\\\").replace("\n", "\\n")
     st.markdown(
         f"""
-        <button onclick="navigator.clipboard.writeText(`{cleaned_text_js}`)" style="background-color:#444;color:white;font-weight:600;border-radius:8px;padding:0.5em 1em;margin-top:0.5em;">📋 Copy to Clipboard</button>
+        <textarea id="copyText" style="position:absolute;left:-9999px;">{cleaned_text_js}</textarea>
+        <button onclick="var copyText = document.getElementById('copyText'); copyText.select(); document.execCommand('copy');" style="background-color:#444;color:white;font-weight:600;border-radius:8px;padding:0.5em 1em;margin-top:0.5em;">📋 Copy to Clipboard</button>
         """,
         unsafe_allow_html=True
     )

@@ -201,14 +201,15 @@ if st.session_state.cleaned_text:
 
     st.download_button("📅 Download as .txt", data=st.session_state.cleaned_text, file_name="note.txt")
 
-    # Functional Copy to Clipboard Button
+     # Functional Copy to Clipboard Button
+    cleaned_text_js = st.session_state.cleaned_text.replace("`", "\\`").replace("\\", "\\\\").replace("\n", "\\n")
     st.markdown(
         f"""
         <button id="copy-btn" style="background-color:#444;color:white;font-weight:600;border-radius:8px;padding:0.5em 1em;margin-top:0.5em;">📋 Copy to Clipboard</button>
         <script>
         const copyBtn = document.getElementById('copy-btn');
         copyBtn.onclick = function() {{
-            navigator.clipboard.writeText(`{st.session_state.cleaned_text.replace("`", "\\`")}`);
+            navigator.clipboard.writeText(`{cleaned_text_js}`);
         }};
         </script>
         """,

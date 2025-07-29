@@ -12,7 +12,7 @@ import base64
 import tempfile
 from gtts import gTTS
 
-# --- Setup ---
+# --- Setup ---             
 FOLDER_DIR = "folders"
 os.makedirs(FOLDER_DIR, exist_ok=True)
 
@@ -133,8 +133,21 @@ ocr_lang = lang_options[ocr_lang_name]
 if image_data:
     if st.button("🧐 Convert to Text"):
         with st.spinner("Extracting and cleaning text..."):
+            # Convert image to OpenCV format (grayscale)
             gray = cv2.cvtColor(np.array(image_data), cv2.COLOR_RGB2GRAY)
-            raw_text = pytesseract.image_to_string(gray, lang=ocr_lang)
+
+            # Apply thresholding
+            thresh = cv2.threshold(gray, 150, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)[1]
+
+            # Denoise the image
+            kernel = np.ones((1, 1), np.uint8)
+            cleaned = cv2.dilate(thresh, kernel, iterations=1)
+            cleaned = cv2.erode(cleaned, kernel, iterations=1)
+
+            # OCR on processed image
+            raw_text = pytesseract.image_to_string(cleaned, lang=ocr_lang)
+
+            # Clean and store
             st.session_state.cleaned_text = clean_text(raw_text)
 
 if st.session_state.cleaned_text:
